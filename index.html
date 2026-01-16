@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>花蓮海星高中 - 115級校外教學互動手冊</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -25,10 +25,14 @@
                             green: '#06D6A0',
                             red: '#EF476F',
                             dark: '#073B4C',
-                        }
+                        },
                     },
                     animation: {
                         'bounce-slow': 'bounce 3s infinite',
+                        'fadeIn': 'fadeIn 0.3s ease-in-out',
+                    },
+                    padding: {
+                        'safe': 'env(safe-area-inset-bottom)',
                     }
                 }
             }
@@ -38,6 +42,8 @@
         body {
             background-color: #F0F9FF;
             -webkit-tap-highlight-color: transparent;
+            /* Prevent pull-to-refresh on mobile for app-like feel */
+            overscroll-behavior-y: none;
         }
         .tab-content {
             display: none;
@@ -70,9 +76,13 @@
             text-decoration: line-through;
             color: #888;
         }
+        /* App-like smooth scrolling */
+        main {
+            -webkit-overflow-scrolling: touch;
+        }
     </style>
 </head>
-<body class="text-brand-dark font-sans h-screen flex flex-col overflow-hidden">
+<body class="text-brand-dark font-sans h-[100dvh] flex flex-col overflow-hidden select-none">
 
     <!-- Header Section -->
     <header class="bg-brand-blue text-white p-4 shadow-lg z-10 rounded-b-3xl shrink-0">
@@ -88,42 +98,42 @@
             </div>
         </div>
         <!-- Countdown or Status -->
-        <div class="bg-white/10 rounded-lg p-2 text-center mt-2">
-            <p id="countdown-text" class="text-sm font-medium animate-pulse">旅程準備開始！</p>
+        <div class="bg-white/10 rounded-lg p-2 text-center mt-2 transition-all duration-500">
+            <p id="countdown-text" class="text-sm font-medium">旅程準備開始！</p>
         </div>
     </header>
 
     <!-- Main Content Area (Scrollable) -->
-    <main class="flex-1 overflow-y-auto p-4 pb-24 space-y-4 no-scrollbar bg-slate-50" id="main-container">
+    <main class="flex-1 overflow-y-auto p-4 pb-24 space-y-4 no-scrollbar bg-slate-50 scroll-smooth" id="main-container">
         
         <!-- Welcome / Home Tab -->
         <div id="tab-home" class="tab-content active space-y-6">
-            <div class="bg-brand-yellow rounded-2xl p-6 text-center card-shadow relative overflow-hidden group hover:scale-[1.02] transition-transform">
+            <div class="bg-brand-yellow rounded-2xl p-6 text-center card-shadow relative overflow-hidden group hover:scale-[1.02] transition-transform cursor-default">
                 <div class="absolute top-0 right-0 -mt-4 -mr-4 bg-white/30 w-24 h-24 rounded-full"></div>
-                <i class="ph-fill ph-bus text-6xl text-brand-dark mb-2 inline-block"></i>
+                <i class="ph-fill ph-bus text-6xl text-brand-dark mb-2 inline-block animate-bounce-slow"></i>
                 <h2 class="text-2xl font-bold mb-2 text-brand-dark">準備好出發了嗎？</h2>
                 <p class="text-lg font-medium">快樂出門，平安回家！</p>
                 <div class="mt-4 bg-white/50 rounded-lg p-3 text-left">
                     <p class="font-bold flex items-center text-lg"><i class="ph-fill ph-clock-alarm mr-2 text-brand-red"></i> 集合資訊</p>
-                    <p class="text-xl mt-1 font-bold pl-7">06:00 學校集合 / 06:20 出發</p>
+                    <p class="text-xl mt-1 font-bold pl-7">05:40 學校集合 / 06:10 出發</p>
                 </div>
             </div>
 
             <!-- Weather Widget Mock -->
             <div class="bg-gradient-to-r from-blue-400 to-blue-300 rounded-2xl p-5 text-white card-shadow">
-                <h3 class="font-bold text-lg mb-3 border-b border-white/30 pb-2">目的地天氣預報</h3>
+                <h3 class="font-bold text-lg mb-3 border-b border-white/30 pb-2 flex items-center"><i class="ph-fill ph-thermometer-simple mr-2"></i>目的地概況</h3>
                 <div class="flex justify-between text-center">
-                    <div>
+                    <div class="flex-1 border-r border-white/20 last:border-0">
                         <p class="text-sm opacity-90">高雄</p>
                         <i class="ph-fill ph-sun text-3xl my-1 text-yellow-300"></i>
                         <p class="font-bold">24°C</p>
                     </div>
-                    <div>
+                    <div class="flex-1 border-r border-white/20 last:border-0">
                         <p class="text-sm opacity-90">嘉義</p>
                         <i class="ph-fill ph-cloud-sun text-3xl my-1"></i>
                         <p class="font-bold">22°C</p>
                     </div>
-                    <div>
+                    <div class="flex-1">
                         <p class="text-sm opacity-90">台中</p>
                         <i class="ph-fill ph-cloud text-3xl my-1"></i>
                         <p class="font-bold">20°C</p>
@@ -137,7 +147,7 @@
                     <i class="ph-fill ph-warning-circle mr-2"></i> 重要提醒
                 </h3>
                 <p class="mt-2 text-base leading-relaxed text-gray-700">
-                    因應環保政策，飯店<span class="font-bold text-brand-red">不再提供一次性盥洗用品</span>。請務必攜帶牙刷、牙膏、毛巾等個人用品！
+                    因應環保政策，飯店<span class="font-bold text-brand-red border-b-2 border-brand-red/20">不再提供一次性盥洗用品</span>。請務必攜帶牙刷、牙膏、毛巾等個人用品！
                 </p>
             </div>
         </div>
@@ -149,13 +159,13 @@
             <!-- Day 1 -->
             <div class="bg-white rounded-2xl p-4 card-shadow">
                 <div class="flex justify-between items-center mb-3">
-                    <span class="bg-brand-blue text-white px-3 py-1 rounded-full text-sm font-bold">Day 1 (01/20)</span>
-                    <span class="text-gray-500 font-medium">高雄之旅</span>
+                    <span class="bg-brand-blue text-white px-3 py-1 rounded-full text-sm font-bold shadow-sm">Day 1 (01/20)</span>
+                    <span class="text-gray-500 font-medium text-sm"><i class="ph-fill ph-map-pin mr-1"></i>高雄之旅</span>
                 </div>
                 <div class="space-y-6 relative pl-4 border-l-2 border-gray-200 ml-2">
                     <div class="relative">
-                        <div class="absolute -left-[21px] top-1 w-3 h-3 bg-brand-blue rounded-full border-2 border-white"></div>
-                        <span class="text-brand-blue font-bold font-mono text-sm block mb-1">06:00 - 06:20</span>
+                        <div class="absolute -left-[21px] top-1 w-3 h-3 bg-brand-blue rounded-full border-2 border-white ring-1 ring-gray-100"></div>
+                        <span class="text-brand-blue font-bold font-mono text-sm block mb-1">05:40 - 06:10</span>
                         <p class="font-bold text-lg">學校集合 / 準時出發</p>
                         <p class="text-sm text-gray-500">快樂出遊，欣賞沿途風光</p>
                     </div>
@@ -167,8 +177,8 @@
                     <div class="relative">
                         <div class="absolute -left-[21px] top-1 w-3 h-3 bg-gray-300 rounded-full border-2 border-white"></div>
                         <span class="text-gray-500 font-bold font-mono text-sm block mb-1">14:50 - 16:00</span>
-                        <div class="flex items-center flex-wrap">
-                            <p class="font-bold text-lg mr-2">勝利新村</p>
+                        <div class="flex items-center flex-wrap gap-2">
+                            <p class="font-bold text-lg">勝利新村</p>
                             <a href="https://www.google.com/maps/search/?api=1&query=屏東勝利星村創意生活園區" target="_blank" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand-blue/10 text-brand-blue hover:bg-brand-blue hover:text-white transition-colors">
                                 <i class="ph-bold ph-navigation-arrow mr-1"></i> 導航
                             </a>
@@ -178,8 +188,8 @@
                     <div class="relative">
                         <div class="absolute -left-[21px] top-1 w-3 h-3 bg-brand-yellow rounded-full border-2 border-white"></div>
                         <span class="text-brand-yellow font-bold font-mono text-sm block mb-1">18:00 - 19:30</span>
-                        <div class="flex items-center flex-wrap">
-                            <p class="font-bold text-lg mr-2">六合夜市</p>
+                        <div class="flex items-center flex-wrap gap-2">
+                            <p class="font-bold text-lg">六合夜市</p>
                             <a href="https://www.google.com/maps/search/?api=1&query=高雄六合夜市" target="_blank" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand-blue/10 text-brand-blue hover:bg-brand-blue hover:text-white transition-colors">
                                 <i class="ph-bold ph-navigation-arrow mr-1"></i> 導航
                             </a>
@@ -197,14 +207,14 @@
                     <div class="w-full">
                         <div class="flex justify-between items-start">
                             <div>
-                                <p class="text-sm text-gray-500 font-bold">21:00 入住</p>
+                                <p class="text-xs text-brand-blue uppercase font-bold tracking-wider mb-1">住宿資訊</p>
                                 <p class="text-lg font-bold text-brand-dark">康橋大飯店七賢旗艦館</p>
                             </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=高雄市新興區同愛街30號" target="_blank" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-white text-brand-blue border border-brand-blue/20 hover:bg-brand-blue hover:text-white transition-colors">
-                                <i class="ph-bold ph-navigation-arrow mr-1"></i> 導航
+                            <a href="https://www.google.com/maps/search/?api=1&query=高雄市新興區同愛街30號" target="_blank" class="shrink-0 ml-2 inline-flex items-center justify-center w-8 h-8 rounded-full bg-white text-brand-blue border border-brand-blue/20 hover:bg-brand-blue hover:text-white transition-colors shadow-sm">
+                                <i class="ph-bold ph-navigation-arrow"></i>
                             </a>
                         </div>
-                        <p class="text-sm text-gray-600 mt-1">高雄市新興區同愛街30號</p>
+                        <p class="text-sm text-gray-600 mt-1 flex items-center"><i class="ph-fill ph-map-pin mr-1 text-gray-400"></i>高雄市新興區同愛街30號</p>
                     </div>
                 </div>
             </div>
@@ -212,8 +222,8 @@
             <!-- Day 2 -->
             <div class="bg-white rounded-2xl p-4 card-shadow">
                 <div class="flex justify-between items-center mb-3">
-                    <span class="bg-brand-green text-white px-3 py-1 rounded-full text-sm font-bold">Day 2 (01/21)</span>
-                    <span class="text-gray-500 font-medium">樂園狂歡</span>
+                    <span class="bg-brand-green text-white px-3 py-1 rounded-full text-sm font-bold shadow-sm">Day 2 (01/21)</span>
+                    <span class="text-gray-500 font-medium text-sm"><i class="ph-fill ph-balloon mr-1"></i>樂園狂歡</span>
                 </div>
                 <div class="space-y-6 relative pl-4 border-l-2 border-gray-200 ml-2">
                     <div class="relative">
@@ -225,8 +235,8 @@
                     <div class="relative">
                         <div class="absolute -left-[21px] top-1 w-3 h-3 bg-brand-green rounded-full border-2 border-white"></div>
                         <span class="text-brand-green font-bold font-mono text-sm block mb-1">09:40 - 15:30</span>
-                        <div class="flex items-center flex-wrap">
-                            <p class="font-bold text-lg mr-2">義大遊樂世界</p>
+                        <div class="flex items-center flex-wrap gap-2">
+                            <p class="font-bold text-lg">義大遊樂世界</p>
                             <a href="https://www.google.com/maps/search/?api=1&query=義大遊樂世界" target="_blank" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand-green/10 text-brand-green hover:bg-brand-green hover:text-white transition-colors">
                                 <i class="ph-bold ph-navigation-arrow mr-1"></i> 導航
                             </a>
@@ -236,8 +246,8 @@
                     <div class="relative">
                         <div class="absolute -left-[21px] top-1 w-3 h-3 bg-gray-300 rounded-full border-2 border-white"></div>
                         <span class="text-gray-500 font-bold font-mono text-sm block mb-1">17:00 - 19:30</span>
-                        <div class="flex items-center flex-wrap">
-                            <p class="font-bold text-lg mr-2">嘉義文化路觀光夜市</p>
+                        <div class="flex items-center flex-wrap gap-2">
+                            <p class="font-bold text-lg">嘉義文化路觀光夜市</p>
                             <a href="https://www.google.com/maps/search/?api=1&query=嘉義文化路夜市" target="_blank" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand-green/10 text-brand-green hover:bg-brand-green hover:text-white transition-colors">
                                 <i class="ph-bold ph-navigation-arrow mr-1"></i> 導航
                             </a>
@@ -250,14 +260,14 @@
                     <div class="w-full">
                         <div class="flex justify-between items-start">
                              <div>
-                                <p class="text-sm text-gray-500 font-bold">20:00 入住</p>
+                                <p class="text-xs text-brand-green uppercase font-bold tracking-wider mb-1">住宿資訊</p>
                                 <p class="text-lg font-bold text-brand-dark">嘉義皇品酒店</p>
                             </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=嘉義市西區自由路468號" target="_blank" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-white text-brand-green border border-brand-green/20 hover:bg-brand-green hover:text-white transition-colors">
-                                <i class="ph-bold ph-navigation-arrow mr-1"></i> 導航
+                            <a href="https://www.google.com/maps/search/?api=1&query=嘉義市西區自由路468號" target="_blank" class="shrink-0 ml-2 inline-flex items-center justify-center w-8 h-8 rounded-full bg-white text-brand-green border border-brand-green/20 hover:bg-brand-green hover:text-white transition-colors shadow-sm">
+                                <i class="ph-bold ph-navigation-arrow"></i>
                             </a>
                         </div>
-                        <p class="text-sm text-gray-600 mt-1">嘉義市西區自由路468號</p>
+                        <p class="text-sm text-gray-600 mt-1 flex items-center"><i class="ph-fill ph-map-pin mr-1 text-gray-400"></i>嘉義市西區自由路468號</p>
                     </div>
                 </div>
             </div>
@@ -265,8 +275,8 @@
              <!-- Day 3 -->
              <div class="bg-white rounded-2xl p-4 card-shadow">
                 <div class="flex justify-between items-center mb-3">
-                    <span class="bg-brand-red text-white px-3 py-1 rounded-full text-sm font-bold">Day 3 (01/22)</span>
-                    <span class="text-gray-500 font-medium">嘉義 - 台中</span>
+                    <span class="bg-brand-red text-white px-3 py-1 rounded-full text-sm font-bold shadow-sm">Day 3 (01/22)</span>
+                    <span class="text-gray-500 font-medium text-sm"><i class="ph-fill ph-tree mr-1"></i>文化巡禮</span>
                 </div>
                 <div class="space-y-6 relative pl-4 border-l-2 border-gray-200 ml-2">
                     <div class="relative">
@@ -278,8 +288,8 @@
                     <div class="relative">
                         <div class="absolute -left-[21px] top-1 w-3 h-3 bg-gray-300 rounded-full border-2 border-white"></div>
                         <span class="text-gray-500 font-bold font-mono text-sm block mb-1">09:30 - 10:30</span>
-                        <div class="flex items-center flex-wrap">
-                            <p class="font-bold text-lg mr-2">檜意森活村</p>
+                        <div class="flex items-center flex-wrap gap-2">
+                            <p class="font-bold text-lg">檜意森活村</p>
                              <a href="https://www.google.com/maps/search/?api=1&query=嘉義檜意森活村" target="_blank" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand-red/10 text-brand-red hover:bg-brand-red hover:text-white transition-colors">
                                 <i class="ph-bold ph-navigation-arrow mr-1"></i> 導航
                             </a>
@@ -291,13 +301,15 @@
                     <i class="ph-fill ph-bed text-2xl text-brand-red mr-3 mt-1"></i>
                     <div class="w-full">
                         <div class="flex justify-between items-start">
-                            <p class="text-sm text-gray-500 font-bold">住宿飯店</p>
-                            <a href="https://www.google.com/maps/search/?api=1&query=臺中市西屯區臺灣大道二段689號" target="_blank" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-white text-brand-red border border-brand-red/20 hover:bg-brand-red hover:text-white transition-colors">
-                                <i class="ph-bold ph-navigation-arrow mr-1"></i> 導航
+                            <div>
+                                <p class="text-xs text-brand-red uppercase font-bold tracking-wider mb-1">住宿資訊</p>
+                                <p class="text-lg font-bold text-brand-dark">永豐棧酒店</p>
+                            </div>
+                            <a href="https://www.google.com/maps/search/?api=1&query=臺中市西屯區臺灣大道二段689號" target="_blank" class="shrink-0 ml-2 inline-flex items-center justify-center w-8 h-8 rounded-full bg-white text-brand-red border border-brand-red/20 hover:bg-brand-red hover:text-white transition-colors shadow-sm">
+                                <i class="ph-bold ph-navigation-arrow"></i>
                             </a>
                         </div>
-                        <p class="text-lg font-bold text-brand-dark">永豐棧酒店</p>
-                        <p class="text-sm text-gray-600">臺中市西屯區臺灣大道二段689號</p>
+                        <p class="text-sm text-gray-600 mt-1 flex items-center"><i class="ph-fill ph-map-pin mr-1 text-gray-400"></i>臺中市西屯區臺灣大道二段689號</p>
                     </div>
                 </div>
             </div>
@@ -305,8 +317,8 @@
             <!-- Day 4 -->
             <div class="bg-white rounded-2xl p-4 card-shadow">
                 <div class="flex justify-between items-center mb-3">
-                    <span class="bg-brand-yellow text-brand-dark px-3 py-1 rounded-full text-sm font-bold">Day 4 (01/23)</span>
-                    <span class="text-gray-500 font-medium">快樂賦歸</span>
+                    <span class="bg-brand-yellow text-brand-dark px-3 py-1 rounded-full text-sm font-bold shadow-sm">Day 4 (01/23)</span>
+                    <span class="text-gray-500 font-medium text-sm"><i class="ph-fill ph-house-line mr-1"></i>快樂賦歸</span>
                 </div>
                 <div class="space-y-6 relative pl-4 border-l-2 border-gray-200 ml-2">
                     <div class="relative">
@@ -318,20 +330,20 @@
                     <div class="relative">
                         <div class="absolute -left-[21px] top-1 w-3 h-3 bg-gray-300 rounded-full border-2 border-white"></div>
                         <span class="text-gray-500 font-bold font-mono text-sm block mb-1">09:30 - 13:30</span>
-                        <div class="flex items-center flex-wrap">
-                            <p class="font-bold text-lg mr-2">麗寶樂園 + Outlet</p>
+                        <div class="flex items-center flex-wrap gap-2">
+                            <p class="font-bold text-lg">麗寶樂園 + Outlet</p>
                             <a href="https://www.google.com/maps/search/?api=1&query=麗寶樂園" target="_blank" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold bg-brand-yellow/10 text-brand-dark hover:bg-brand-yellow hover:text-white transition-colors">
                                 <i class="ph-bold ph-navigation-arrow mr-1"></i> 導航
                             </a>
                         </div>
                         <p class="text-sm text-gray-500">探索樂園與購物樂趣</p>
-                        <span class="inline-block mt-1 text-xs font-bold text-white bg-brand-red/80 px-2 py-1 rounded">午餐：中式餐盒</span>
+                        <span class="inline-block mt-2 text-xs font-bold text-white bg-brand-red/90 px-2 py-1 rounded shadow-sm">午餐：中式餐盒</span>
                     </div>
                     <div class="relative">
                         <div class="absolute -left-[21px] top-1 w-3 h-3 bg-brand-blue rounded-full border-2 border-white"></div>
                         <span class="text-brand-blue font-bold font-mono text-sm block mb-1">16:20 - 17:31</span>
                         <p class="font-bold text-lg">搭乘火車 (莒光 6254次)</p>
-                        <p class="text-sm text-gray-500">蘇澳新站 <i class="ph-bold ph-arrow-right mx-1"></i> 花蓮站</p>
+                        <p class="text-sm text-gray-500">蘇澳新站 <i class="ph-bold ph-arrow-right mx-1 text-xs"></i> 花蓮站</p>
                     </div>
                     <div class="relative">
                         <div class="absolute -left-[21px] top-1 w-3 h-3 bg-brand-green rounded-full border-2 border-white"></div>
@@ -348,19 +360,19 @@
             <h2 class="text-2xl font-bold text-brand-dark pl-2 border-l-4 border-brand-green">行李檢查表</h2>
             
             <!-- Progress Bar -->
-            <div class="bg-white p-4 rounded-xl card-shadow">
+            <div class="bg-white p-4 rounded-xl card-shadow sticky top-0 z-10 border-b border-gray-100">
                 <div class="flex justify-between text-sm font-bold mb-2">
                     <span>準備進度</span>
                     <span id="progress-text">0%</span>
                 </div>
-                <div class="w-full bg-gray-200 rounded-full h-3">
+                <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                     <div id="progress-bar" class="bg-brand-green h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
                 </div>
                 <p class="text-xs text-gray-500 mt-2 text-center">點擊項目即可標記完成</p>
             </div>
 
             <!-- List Groups -->
-            <div class="space-y-3" id="checklist-container">
+            <div class="space-y-3 pb-8" id="checklist-container">
                 <!-- Generated by JS -->
             </div>
         </div>
@@ -372,50 +384,56 @@
             <div class="grid grid-cols-1 gap-4">
                 <!-- Hotel Rules -->
                 <div class="bg-white rounded-2xl p-5 card-shadow border-t-4 border-brand-blue">
-                    <h3 class="font-bold text-xl mb-3 flex items-center">
-                        <i class="ph-fill ph-house-line text-brand-blue mr-2"></i> 飯店住宿須知
+                    <h3 class="font-bold text-xl mb-3 flex items-center text-brand-dark">
+                        <div class="bg-brand-blue/10 p-2 rounded-full mr-3">
+                            <i class="ph-fill ph-house-line text-brand-blue"></i>
+                        </div>
+                        飯店住宿
                     </h3>
-                    <ul class="space-y-3 text-lg">
+                    <ul class="space-y-4 text-base">
                         <li class="flex items-start">
-                            <i class="ph-bold ph-check-circle text-green-500 mr-2 mt-1 shrink-0"></i>
-                            <span>走動輕聲細語，維護住宿品質。</span>
+                            <i class="ph-fill ph-check-circle text-green-500 mr-3 mt-1 text-xl shrink-0"></i>
+                            <span class="text-gray-700">走動輕聲細語，維護住宿品質。</span>
                         </li>
                         <li class="flex items-start">
-                            <i class="ph-bold ph-prohibit text-red-500 mr-2 mt-1 shrink-0"></i>
-                            <span>嚴禁更換房間、串門子或喧嘩。</span>
+                            <i class="ph-fill ph-prohibit text-red-500 mr-3 mt-1 text-xl shrink-0"></i>
+                            <span class="text-gray-700">嚴禁更換房間、串門子或喧嘩。</span>
                         </li>
                         <li class="flex items-start">
-                            <i class="ph-bold ph-warning text-yellow-500 mr-2 mt-1 shrink-0"></i>
-                            <span>注意安全，<span class="font-bold text-red-500">請勿在床上彈跳</span>。</span>
+                            <i class="ph-fill ph-warning text-yellow-500 mr-3 mt-1 text-xl shrink-0"></i>
+                            <span class="text-gray-700">注意安全，<span class="font-bold text-red-500 bg-red-50 px-1 rounded">請勿在床上彈跳</span>。</span>
                         </li>
                         <li class="flex items-start">
-                            <i class="ph-bold ph-television text-blue-500 mr-2 mt-1 shrink-0"></i>
-                            <span>請勿隨意搬動電視。</span>
+                            <i class="ph-fill ph-television text-blue-500 mr-3 mt-1 text-xl shrink-0"></i>
+                            <span class="text-gray-700">請勿隨意搬動電視或其他設備。</span>
                         </li>
                         <li class="flex items-start">
-                            <i class="ph-bold ph-towel text-purple-500 mr-2 mt-1 shrink-0"></i>
-                            <span>用過的毛巾請放回浴室，勿放床上。</span>
+                            <i class="ph-fill ph-towel text-purple-500 mr-3 mt-1 text-xl shrink-0"></i>
+                            <span class="text-gray-700">用過的毛巾請放回浴室，勿放床上。</span>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Dining Rules -->
                 <div class="bg-white rounded-2xl p-5 card-shadow border-t-4 border-brand-yellow">
-                    <h3 class="font-bold text-xl mb-3 flex items-center">
-                        <i class="ph-fill ph-fork-knife text-brand-yellow mr-2"></i> 用餐與購物
+                    <h3 class="font-bold text-xl mb-3 flex items-center text-brand-dark">
+                        <div class="bg-brand-yellow/10 p-2 rounded-full mr-3">
+                            <i class="ph-fill ph-fork-knife text-brand-yellow"></i>
+                        </div>
+                        用餐與購物
                     </h3>
-                    <ul class="space-y-3 text-lg">
+                    <ul class="space-y-4 text-base">
                         <li class="flex items-start">
-                            <i class="ph-bold ph-check-circle text-green-500 mr-2 mt-1 shrink-0"></i>
-                            <span>依桌次就坐，保持肅靜，注意禮儀。</span>
+                            <i class="ph-fill ph-users-three text-brand-dark mr-3 mt-1 text-xl shrink-0"></i>
+                            <span class="text-gray-700">依桌次就坐，保持肅靜，注意禮儀。</span>
                         </li>
                         <li class="flex items-start">
-                            <i class="ph-bold ph-hamburger text-orange-500 mr-2 mt-1 shrink-0"></i>
-                            <span>適量飲食，避免過飽或空腹導致暈車。</span>
+                            <i class="ph-fill ph-hamburger text-orange-500 mr-3 mt-1 text-xl shrink-0"></i>
+                            <span class="text-gray-700">適量飲食，避免過飽或空腹導致暈車。</span>
                         </li>
                         <li class="flex items-start">
-                            <i class="ph-bold ph-shopping-bag text-pink-500 mr-2 mt-1 shrink-0"></i>
-                            <span>購買名產請貨比三家，注意新鮮度。</span>
+                            <i class="ph-fill ph-shopping-bag text-pink-500 mr-3 mt-1 text-xl shrink-0"></i>
+                            <span class="text-gray-700">購買名產請貨比三家，注意新鮮度。</span>
                         </li>
                     </ul>
                 </div>
@@ -427,17 +445,17 @@
             <h2 class="text-2xl font-bold text-brand-dark pl-2 border-l-4 border-brand-red">住宿房號查詢</h2>
             <p class="text-gray-600 mb-4">輸入姓名，快速查詢您的房間資訊！</p>
             
-            <div class="bg-white p-6 rounded-2xl card-shadow text-center space-y-4">
-                <div class="w-16 h-16 bg-brand-red/10 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-red">
+            <div class="bg-white p-6 rounded-2xl card-shadow text-center space-y-4 sticky top-0 z-10">
+                <div class="w-16 h-16 bg-brand-red/10 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-red ring-4 ring-red-50">
                     <i class="ph-fill ph-door-open text-3xl"></i>
                 </div>
                 
                 <div class="space-y-4">
                     <input type="text" id="name-input" placeholder="請輸入姓名 (例如: 王小明)" 
-                           class="w-full p-4 border-2 border-gray-200 rounded-xl text-lg text-center focus:border-brand-red focus:outline-none transition-colors">
+                           class="w-full p-4 border-2 border-gray-200 rounded-xl text-lg text-center focus:border-brand-red focus:outline-none focus:ring-4 focus:ring-brand-red/10 transition-all placeholder:text-gray-300">
                     
                     <button onclick="searchRoom()" 
-                            class="w-full bg-brand-red text-white font-bold py-3 rounded-xl shadow-lg hover:bg-red-600 transition-colors flex items-center justify-center active:scale-95">
+                            class="w-full bg-brand-red text-white font-bold py-3 rounded-xl shadow-lg hover:bg-red-600 transition-all active:scale-95 flex items-center justify-center">
                         <i class="ph-bold ph-magnifying-glass mr-2 text-xl"></i>
                         查詢
                     </button>
@@ -446,37 +464,40 @@
                 <!-- Search Result Container -->
                 <div id="search-result" class="hidden mt-6 text-left animate-[fadeIn_0.5s_ease-out]">
                     <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
-                        <h3 class="font-bold text-xl text-brand-dark mb-3 border-b pb-2 flex items-center justify-between">
+                        <h3 class="font-bold text-xl text-brand-dark mb-3 border-b border-gray-200 pb-2 flex items-center justify-between">
                             <span><span id="result-name" class="text-brand-red mr-2"></span>的房間</span>
                             <span id="result-role" class="text-xs text-white bg-gray-400 px-2 py-1 rounded-full"></span>
                         </h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between items-center">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100">
                                 <div>
-                                    <span class="text-xs font-bold text-brand-blue bg-blue-100 px-2 py-0.5 rounded">01/20 康橋大飯店</span>
+                                    <span class="text-xs font-bold text-brand-blue bg-brand-blue/10 px-2 py-0.5 rounded mb-1 inline-block">01/20 康橋</span>
                                 </div>
-                                <span id="result-day1" class="font-bold text-xl text-brand-dark"></span>
+                                <span id="result-day1" class="font-bold text-2xl text-brand-dark font-mono"></span>
                             </div>
-                            <div class="flex justify-between items-center">
+                            <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100">
                                 <div>
-                                    <span class="text-xs font-bold text-brand-green bg-green-100 px-2 py-0.5 rounded">01/21 嘉義皇品</span>
+                                    <span class="text-xs font-bold text-brand-green bg-brand-green/10 px-2 py-0.5 rounded mb-1 inline-block">01/21 皇品</span>
                                 </div>
-                                <span id="result-day2" class="font-bold text-xl text-brand-dark"></span>
+                                <span id="result-day2" class="font-bold text-2xl text-brand-dark font-mono"></span>
                             </div>
-                            <div class="flex justify-between items-center">
+                            <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100">
                                 <div>
-                                    <span class="text-xs font-bold text-brand-red bg-red-100 px-2 py-0.5 rounded">01/22 永豐棧酒店</span>
+                                    <span class="text-xs font-bold text-brand-red bg-brand-red/10 px-2 py-0.5 rounded mb-1 inline-block">01/22 永豐棧</span>
                                 </div>
-                                <span id="result-day3" class="font-bold text-xl text-brand-dark"></span>
+                                <span id="result-day3" class="font-bold text-2xl text-brand-dark font-mono"></span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <p id="search-error" class="hidden text-red-500 font-bold mt-4">查無資料，請確認姓名是否輸入正確。</p>
+                <div id="search-error" class="hidden mt-4 p-4 bg-red-50 text-red-500 rounded-xl flex items-center justify-center">
+                     <i class="ph-fill ph-x-circle mr-2 text-xl"></i>
+                     <span class="font-bold">查無資料，請確認姓名是否輸入正確。</span>
+                </div>
             </div>
             
-            <div class="text-center">
+            <div class="text-center pb-8">
                  <p class="text-xs text-gray-400 mt-2">* 僅供參考，實際房號以領隊現場宣布為準</p>
             </div>
         </div>
@@ -484,27 +505,27 @@
     </main>
 
     <!-- Bottom Navigation Bar -->
-    <nav class="bg-white border-t border-gray-200 fixed bottom-0 w-full z-20 pb-safe">
+    <nav class="bg-white border-t border-gray-200 fixed bottom-0 w-full z-20 pb-safe shadow-[0_-5px_10px_rgba(0,0,0,0.02)]">
         <div class="flex justify-around items-center h-16">
-            <button onclick="switchTab('home')" class="nav-btn active flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand-blue transition-colors" data-target="home">
-                <i class="ph-fill ph-house text-2xl mb-1"></i>
-                <span class="text-xs font-bold">首頁</span>
+            <button onclick="switchTab('home')" class="nav-btn active flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand-blue transition-colors group" data-target="home">
+                <i class="ph-fill ph-house text-2xl mb-1 group-active:scale-90 transition-transform"></i>
+                <span class="text-[10px] font-bold">首頁</span>
             </button>
-            <button onclick="switchTab('schedule')" class="nav-btn flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand-blue transition-colors" data-target="schedule">
-                <i class="ph-fill ph-calendar-check text-2xl mb-1"></i>
-                <span class="text-xs font-bold">行程</span>
+            <button onclick="switchTab('schedule')" class="nav-btn flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand-blue transition-colors group" data-target="schedule">
+                <i class="ph-fill ph-calendar-check text-2xl mb-1 group-active:scale-90 transition-transform"></i>
+                <span class="text-[10px] font-bold">行程</span>
             </button>
-            <button onclick="switchTab('checklist')" class="nav-btn flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand-blue transition-colors" data-target="checklist">
-                <i class="ph-fill ph-backpack text-2xl mb-1"></i>
-                <span class="text-xs font-bold">行李</span>
+            <button onclick="switchTab('checklist')" class="nav-btn flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand-blue transition-colors group" data-target="checklist">
+                <i class="ph-fill ph-backpack text-2xl mb-1 group-active:scale-90 transition-transform"></i>
+                <span class="text-[10px] font-bold">行李</span>
             </button>
-            <button onclick="switchTab('rules')" class="nav-btn flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand-blue transition-colors" data-target="rules">
-                <i class="ph-fill ph-book-open text-2xl mb-1"></i>
-                <span class="text-xs font-bold">須知</span>
+            <button onclick="switchTab('rules')" class="nav-btn flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand-blue transition-colors group" data-target="rules">
+                <i class="ph-fill ph-book-open text-2xl mb-1 group-active:scale-90 transition-transform"></i>
+                <span class="text-[10px] font-bold">須知</span>
             </button>
-            <button onclick="switchTab('rooms')" class="nav-btn flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand-blue transition-colors" data-target="rooms">
-                <i class="ph-fill ph-key text-2xl mb-1"></i>
-                <span class="text-xs font-bold">查房號</span>
+            <button onclick="switchTab('rooms')" class="nav-btn flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand-blue transition-colors group" data-target="rooms">
+                <i class="ph-fill ph-key text-2xl mb-1 group-active:scale-90 transition-transform"></i>
+                <span class="text-[10px] font-bold">查房號</span>
             </button>
         </div>
     </nav>
@@ -526,21 +547,12 @@
             },
             {
                 category: "其他裝備",
-                items: ["大型行李袋/箱", "個人隨身雙肩背包", "紙、筆、手冊"]
+                items: ["大型行李袋/箱", "個人隨身雙肩背包", "紙、筆、手冊", "行動電源 / 充電線"]
             }
         ];
 
         // -------------------------------------------------------------------
         // 住宿名單資料庫 (請在此處填入 PDF 手冊中的實際房號)
-        // -------------------------------------------------------------------
-        // 格式說明：
-        // name: 姓名
-        // role: 身分 (teacher: 老師, student: 學生)
-        // rooms: { 
-        //    day1: 第一天房號 (康橋), 
-        //    day2: 第二天房號 (皇品), 
-        //    day3: 第三天房號 (永豐棧) 
-        // }
         // -------------------------------------------------------------------
         const roomDatabase = [
             // 範例資料 (請替換為真實資料)
@@ -554,24 +566,25 @@
             { name: "賴博財", role: "student", rooms: { day1: "709", day2: "8017", day3: "516" } },
             { name: "蘇 晴", role: "student", rooms: { day1: "608", day2: "9026", day3: "920" } },
             { name: "何婕妤", role: "student", rooms: { day1: "608", day2: "9026", day3: "920" } },
-            { name: "温羽庭", role: "student", rooms: { day1: "608", day2: "9026", day3: "920" } },
+            { name: "溫羽庭", role: "student", rooms: { day1: "608", day2: "9026", day3: "920" } },
             { name: "吳宜珈", role: "student", rooms: { day1: "608", day2: "9026", day3: "920" } },
             { name: "李 馥", role: "student", rooms: { day1: "609", day2: "9027", day3: "922" } },
-             { name: "那芸蓁", role: "student", rooms: { day1: "609", day2: "9027", day3: "922" } },
+            { name: "那芸蓁", role: "student", rooms: { day1: "609", day2: "9027", day3: "922" } },
             { name: "汪俞安", role: "student", rooms: { day1: "609", day2: "9027", day3: "922" } },
             { name: "王家柔", role: "student", rooms: { day1: "609", day2: "9027", day3: "922" } },
             { name: "陳方箴", role: "student", rooms: { day1: "612", day2: "1027", day3: "935" } },
             { name: "黃皓慈", role: "student", rooms: { day1: "612", day2: "1027", day3: "935" } },
             { name: "邱琦恩", role: "student", rooms: { day1: "612", day2: "1027", day3: "935" } },
             { name: "許文瑜", role: "teacher", rooms: { day1: "1303", day2: "1002", day3: "406" } },
-            
-            // 請依照此格式繼續往下新增...
         ];
 
         // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
             renderChecklist();
             updateCountdown();
+            // Start countdown loop
+            setInterval(updateCountdown, 60000); 
+            loadChecklistState();
         });
 
         // Tab Switching Logic
@@ -586,10 +599,21 @@
             // Update Nav Buttons
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('text-brand-blue', 'text-brand-yellow');
+                btn.classList.remove('active');
                 btn.classList.add('text-gray-400');
+                
+                // Reset icons to outline
+                const icon = btn.querySelector('i');
+                // icon.classList.remove('ph-fill');
+                // icon.classList.add('ph-bold');
+
                 if(btn.dataset.target === tabId) {
                     btn.classList.remove('text-gray-400');
                     btn.classList.add('text-brand-blue');
+                    btn.classList.add('active');
+                    // Set active icon to fill
+                    // icon.classList.remove('ph-bold');
+                    // icon.classList.add('ph-fill');
                 }
             });
 
@@ -603,8 +627,13 @@
             const resultDiv = document.getElementById('search-result');
             const errorText = document.getElementById('search-error');
             
+            // Basic fuzzy search logic (remove spaces)
+            const cleanInput = input.replace(/\s/g, '');
+            
+            if (!cleanInput) return;
+
             // Find person
-            const person = roomDatabase.find(p => p.name === input);
+            const person = roomDatabase.find(p => p.name.replace(/\s/g, '') === cleanInput);
 
             if (person) {
                 // Found
@@ -633,50 +662,46 @@
             }
         }
 
-        // Render Checklist
+        // --- Checklist Logic with LocalStorage ---
+        
         function renderChecklist() {
             const container = document.getElementById('checklist-container');
             container.innerHTML = '';
             
             let totalItems = 0;
+            let globalItemIndex = 0;
 
-            packingList.forEach((group, groupIndex) => {
+            packingList.forEach((group) => {
                 const groupDiv = document.createElement('div');
-                groupDiv.className = 'bg-white rounded-xl p-4 card-shadow';
+                groupDiv.className = 'bg-white rounded-xl p-4 card-shadow mb-4';
                 
                 const title = document.createElement('h3');
-                title.className = 'font-bold text-lg mb-3 text-brand-dark border-b pb-2';
+                title.className = 'font-bold text-lg mb-3 text-brand-dark border-b border-gray-100 pb-2';
                 title.textContent = group.category;
                 groupDiv.appendChild(title);
 
-                group.items.forEach((item, itemIndex) => {
+                group.items.forEach((item) => {
                     totalItems++;
+                    const currentId = `check-${globalItemIndex}`;
+                    
                     const itemDiv = document.createElement('div');
-                    itemDiv.className = 'checklist-item flex items-center p-3 rounded-lg border border-gray-100 mb-2 cursor-pointer transition-all active:scale-95';
+                    itemDiv.className = 'checklist-item flex items-center p-3 rounded-lg border border-gray-100 mb-2 cursor-pointer transition-all active:scale-[0.98] select-none';
+                    itemDiv.dataset.id = currentId;
+                    
                     itemDiv.innerHTML = `
-                        <div class="w-6 h-6 rounded border-2 border-brand-green flex items-center justify-center mr-3 bg-white check-box">
-                            <i class="ph-bold ph-check text-white opacity-0 transition-opacity"></i>
+                        <div class="w-6 h-6 rounded border-2 border-brand-green flex items-center justify-center mr-3 bg-white check-box transition-colors">
+                            <i class="ph-bold ph-check text-white opacity-0 transition-opacity transform scale-75"></i>
                         </div>
-                        <span class="font-medium text-lg">${item}</span>
+                        <span class="font-medium text-base transition-all">${item}</span>
                     `;
                     
                     // Toggle check logic
                     itemDiv.onclick = function() {
-                        this.classList.toggle('checked');
-                        const checkIcon = this.querySelector('.ph-check');
-                        const checkBox = this.querySelector('.check-box');
-                        
-                        if (this.classList.contains('checked')) {
-                            checkIcon.classList.remove('opacity-0');
-                            checkBox.classList.add('bg-brand-green');
-                        } else {
-                            checkIcon.classList.add('opacity-0');
-                            checkBox.classList.remove('bg-brand-green');
-                        }
-                        updateProgress(totalItems);
+                        toggleItem(this, totalItems);
                     };
 
                     groupDiv.appendChild(itemDiv);
+                    globalItemIndex++;
                 });
 
                 container.appendChild(groupDiv);
@@ -687,44 +712,113 @@
             document.querySelector('[data-target="home"]').classList.add('text-brand-blue');
         }
 
-        // Update Progress Bar
-        function updateProgress(total) {
-            const checkedCount = document.querySelectorAll('.checklist-item.checked').length;
-            const percentage = Math.round((checkedCount / total) * 100);
+        function toggleItem(element, totalItems) {
+            element.classList.toggle('checked');
+            const checkIcon = element.querySelector('.ph-check');
+            const checkBox = element.querySelector('.check-box');
+            const id = element.dataset.id;
             
-            document.getElementById('progress-bar').style.width = `${percentage}%`;
-            document.getElementById('progress-text').textContent = `${percentage}%`;
+            if (element.classList.contains('checked')) {
+                checkIcon.classList.remove('opacity-0');
+                checkIcon.classList.add('scale-100');
+                checkBox.classList.add('bg-brand-green');
+                saveState(id, true);
+            } else {
+                checkIcon.classList.add('opacity-0');
+                checkIcon.classList.remove('scale-100');
+                checkBox.classList.remove('bg-brand-green');
+                saveState(id, false);
+            }
+            updateProgress(totalItems);
+        }
+
+        function updateProgress(total) {
+            // Recalculate based on DOM state for simplicity
+            const totalElements = document.querySelectorAll('.checklist-item').length;
+            const checkedCount = document.querySelectorAll('.checklist-item.checked').length;
+            
+            // Avoid division by zero
+            const finalTotal = totalElements || 1; 
+            const percentage = Math.round((checkedCount / finalTotal) * 100);
+            
+            const bar = document.getElementById('progress-bar');
+            const text = document.getElementById('progress-text');
+            
+            bar.style.width = `${percentage}%`;
+            text.textContent = `${percentage}%`;
 
             if(percentage === 100) {
-                document.getElementById('progress-bar').classList.add('bg-brand-yellow');
-                document.getElementById('progress-text').textContent = "🎉 準備完成！";
+                bar.classList.add('bg-brand-yellow');
+                bar.classList.remove('bg-brand-green');
+                text.textContent = "🎉 完成！";
             } else {
-                document.getElementById('progress-bar').classList.remove('bg-brand-yellow');
+                bar.classList.add('bg-brand-green');
+                bar.classList.remove('bg-brand-yellow');
             }
         }
 
-        // Countdown Logic (Simple)
+        function saveState(id, isChecked) {
+            try {
+                localStorage.setItem(id, isChecked);
+            } catch (e) {
+                console.log('LocalStorage not supported');
+            }
+        }
+
+        function loadChecklistState() {
+            try {
+                const items = document.querySelectorAll('.checklist-item');
+                items.forEach(item => {
+                    const id = item.dataset.id;
+                    const isChecked = localStorage.getItem(id) === 'true';
+                    if (isChecked) {
+                        item.classList.add('checked');
+                        const checkIcon = item.querySelector('.ph-check');
+                        const checkBox = item.querySelector('.check-box');
+                        checkIcon.classList.remove('opacity-0');
+                        checkIcon.classList.add('scale-100');
+                        checkBox.classList.add('bg-brand-green');
+                    }
+                });
+                updateProgress();
+            } catch (e) {
+                console.log('LocalStorage not available');
+            }
+        }
+
+        // Countdown Logic
         function updateCountdown() {
-            // Target date: Jan 20, 2026
-            const targetDate = new Date('2026-01-20T06:00:00'); 
+            // Target date: Jan 20, 2026 (assumed from context 115th class)
+            // Note: If year is dynamic, we should adjust. Assuming current upcoming trip.
+            // Using 2026 based on "115級" usually graduating around then or trip time.
+            // If the user meant 2025, please adjust the year below.
+            const targetYear = 2026; 
+            const targetDate = new Date(`${targetYear}-01-20T05:40:00`); 
             const now = new Date();
             const diff = targetDate - now;
 
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             
             const el = document.getElementById('countdown-text');
+            const container = el.parentElement;
+
             if (diff < 0) {
                 // Trip Started
-                const endTrip = new Date('2026-01-23T18:00:00');
+                const endTrip = new Date(`${targetYear}-01-23T18:00:00`);
                 if (now < endTrip) {
-                    el.textContent = "🚀 旅程進行中，享受每一刻！";
-                    el.className = "text-sm font-bold text-yellow-300 animate-pulse";
+                    el.innerHTML = "<i class='ph-fill ph-rocket'></i> 旅程進行中，享受每一刻！";
+                    el.className = "text-sm font-bold text-brand-yellow animate-pulse";
+                    container.classList.add('bg-brand-dark');
+                    container.classList.remove('bg-white/10');
                 } else {
-                    el.textContent = "🏠 旅程圓滿結束，歡迎回家！";
+                    el.innerHTML = "<i class='ph-fill ph-house'></i> 旅程圓滿結束，歡迎回家！";
                     el.className = "text-sm font-bold";
+                    container.classList.remove('bg-brand-dark');
+                    container.classList.add('bg-white/10');
                 }
             } else {
-                el.textContent = `⏳ 距離出發還有 ${days} 天，加油！`;
+                el.innerHTML = `⏳ 距離出發還有 <span class="text-lg font-bold text-yellow-300 mx-1">${days}</span> 天 <span class="text-xs opacity-75">${hours}小時</span>`;
             }
         }
     </script>
